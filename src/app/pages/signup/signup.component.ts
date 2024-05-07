@@ -5,6 +5,7 @@ import { AuthService } from '../../shared/services/auth.service';
 import { User } from '../../shared/models/User';
 import { UserService } from '../../shared/services/user.service';
 import { Router } from '@angular/router';
+import { Console } from 'console';
 
 @Component({
   selector: 'app-signup',
@@ -15,8 +16,11 @@ export class SignupComponent implements OnInit {
 
   signUpForm = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
-    password: new FormControl('', [Validators.required, Validators.minLength(6)]),
-    rePassword: new FormControl('', [Validators.required, Validators.minLength(6)]),
+    password: new FormControl('', [Validators.required, Validators.minLength(6)]), // az volt a problema hogy csak 6 karakterrel fogadja el a jelszot
+    rePassword: new FormControl('', [Validators.required, Validators.minLength(6)]), // a deploy-nal meg az hogy init-elve lett a projekt ezert osszefosta magat
+    // email: new FormControl(''),
+    // password: new FormControl(''),
+    // rePassword: new FormControl(''),
     name: new FormGroup({
       firstName: new FormControl(''),
       lastName: new FormControl(''),
@@ -29,14 +33,15 @@ export class SignupComponent implements OnInit {
   }
 
   onSubmit(){
-      this.authService.signup(this.signUpForm.get('email')?.value, this.signUpForm.get('password')?.value).then(cred => {
+      // console.log(this.signUpForm.value)
+      this.authService.signup(this.signUpForm.get('email')?.value as string, this.signUpForm.get('password')?.value as string).then(cred => {
         const user: User = {
           id: cred.user?.uid as string,
-          email: this.signUpForm.get('email')?.value,
-          username: this.signUpForm.get('email')?.value.split('@')[0],
+          email: this.signUpForm.get('email')?.value as string,
+          username: (this.signUpForm.get('email')?.value as string).split('@')[0],
           name: {
-            firstname: this.signUpForm.get('name.firstName')?.value,
-            lastname: this.signUpForm.get('name.lastName')?.value,
+            firstname: this.signUpForm.get('name.firstName')?.value as string,
+            lastname: this.signUpForm.get('name.lastName')?.value as string,
           }
         };
         this.userService.create(user).then(_ => {

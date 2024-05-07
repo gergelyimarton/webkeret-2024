@@ -9,7 +9,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ListComponent } from './list/list.component';
 
@@ -30,7 +29,6 @@ import { ListComponent } from './list/list.component';
     MatCardModule,
     MatInputModule,
     MatButtonModule,
-    FlexLayoutModule,
   ]
 })
 export class MeterReadingModule { }

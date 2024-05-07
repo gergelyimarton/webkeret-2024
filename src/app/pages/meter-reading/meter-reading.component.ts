@@ -7,6 +7,7 @@ import { Reading } from '../../shared/models/Reading';
 import { ReadingService } from '../../shared/services/reading.service';
 import { Meter } from '../../shared/models/Meter';
 import { MeterService } from '../../shared/services/meter.service';
+import { Settings } from '@angular/fire/compat/firestore';
 
 @Component({
   selector: 'app-meter-reading',
@@ -39,14 +40,14 @@ export class MeterReadingComponent implements OnInit {
     const user = JSON.parse(localStorage.getItem('user') as string) as firebase.default.User;
     this.userService.getById(user.uid).subscribe(data => {
       this.user = data;
-      this.readingForm.get('user_id')?.setValue(this.user?.id);
+      this.readingForm.get('user_id')?.setValue(this.user?.id as string);
     }, error => {
       console.error(error);
     });
   }
 
   getMeterName(meter?: Meter) {
-    this.readingForm.get('meter')?.setValue(meter?.name);
+    this.readingForm.get('meter')?.setValue(meter?.name as string);
     this.meter_id = meter?.id
   }
 
@@ -64,7 +65,7 @@ export class MeterReadingComponent implements OnInit {
         
         this.meterService.updateCurrent(this.meter_id as string, this.update_current as number)
 
-        this.readingService.create(this.readingForm.value).then(_ => {
+        this.readingService.create(this.readingForm.value as any).then(_ => {
           this.router.navigateByUrl('/main');
         }).catch(error => {
           console.error(error);

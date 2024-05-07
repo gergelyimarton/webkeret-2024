@@ -10,7 +10,7 @@ const routes: Routes = [
   { path: 'not-found', loadChildren: () => import('./pages/not-found/not-found.module').then(m => m.NotFoundModule) },
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'reading', loadChildren: () => import('./pages/meter-reading/meter-reading.module').then(m => m.MeterReadingModule), canActivate: [AuthGuard] },
-  { path: 'gas-meter', loadChildren: () => import('./pages/gas-meter/gas-meter.module').then(m => m.GasMeterModule), canActivate: [AuthGuard] },
+  { path: 'water-meter', loadChildren: () => import('./pages/water-meter/water-meter.module').then(m => m.GasMeterModule), canActivate: [AuthGuard] },
   { path: '**', redirectTo: '/not-found' }
 ];
 

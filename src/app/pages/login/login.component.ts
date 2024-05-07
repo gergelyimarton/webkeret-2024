@@ -19,7 +19,7 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    this.authService.login(this.email.value, this.password.value).then(cred => {
+    this.authService.login(this.email.value as string, this.password.value as string).then(cred => {
       this.router.navigateByUrl('/main');
     }).catch(error => {
       console.error(error);
